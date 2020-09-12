@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lieying.dao.AdministratorMapper">
+
+    <select id="selectAdministratorByUsernameAndPassword" resultMap="administratorResultMap" >
+
+        select * from administrator where administrator_username = #{username} and administrator_password = #{password} limit 1
+    </select>
+    <resultMap id="administratorResultMap" type="Administrator">
+        <id property="id" column="administrator_id"/>
+        <result property="username" column="administrator_username"/>
+        <result property="password" column="administrator_password"/>
+
+<!--        @OneToMany(mappedBy="administrator",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)-->
+<!--        private Set<Information> informations;-->
+<!--        @OneToMany(mappedBy="administrator",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)-->
+<!--        private Set<Resource> resources;-->
+    </resultMap>
+</mapper>

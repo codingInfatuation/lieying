@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+				
+				http://www.springframework.org/schema/mvc
+				http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+				http://www.springframework.org/schema/context 
+				http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<!-- 自动扫描controller -->			
+	<context:component-scan base-package="org.lieying.web.controller"/>
+	<!-- Spring MVC不处理静态资源 -->
+	<mvc:default-servlet-handler />
+	<!--注解驱动 -->
+	<mvc:annotation-driven/>
+	<mvc:interceptors>
+<!--        &lt;!&ndash;登录拦截器&ndash;&gt;-->
+<!--		<mvc:interceptor>-->
+<!--			&lt;!&ndash;拦截所有请求&ndash;&gt;-->
+<!--			<mvc:mapping path="/**"/>-->
+<!--			&lt;!&ndash;排除以下请求&ndash;&gt;-->
+<!--			<mvc:exclude-mapping path="/"/>-->
+<!--			<mvc:exclude-mapping path="/user/login"/>-->
+<!--			<mvc:exclude-mapping path="/user/all"/>-->
+<!--			<mvc:exclude-mapping path="/user/all1"/>-->
+<!--			<mvc:exclude-mapping path="/user/all2"/>-->
+<!--			<mvc:exclude-mapping path="/user/all3"/>-->
+<!--			<bean class="org.lieying.web.interceptor.LoginInterceptor"/>-->
+<!--		</mvc:interceptor>-->
+		<!--错误拦截器-->
+		<mvc:interceptor>
+			<!--拦截所有请求-->
+			<mvc:mapping path="/**"/>
+			<bean class="org.lieying.web.interceptor.ErrorInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 视图资源解析器 -->
+	<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+	<mvc:resources mapping="/images/**" location="resources/images/"/>
+<!--	<bean id="multipartResolver"-->
+	<!--		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+	<!--	</bean>-->
+</beans>

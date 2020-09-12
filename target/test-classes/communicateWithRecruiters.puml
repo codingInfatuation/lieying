@@ -1,0 +1,11 @@
+@startuml
+actor JobHunter
+JobHunter ->PositionDetailInterface: click "communicate immediately"
+PositionDetailInterface -> System: searchRecruiterInfoById()
+
+System -->> PositionDetailInterface: RecruiterInfo
+
+
+Alice <-- Bob: another authentication Response
+@enduml
+

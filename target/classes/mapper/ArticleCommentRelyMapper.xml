@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lieying.dao.ArticleCommentRelyMapper">
+    <select id="selectArticleCommentRelyById" resultMap="articleCommentRelyResultMap" parameterType="int" >
+        select * from article_comment_rely where article_comment_rely_id = #{article_comment_rely_id} limit 1
+    </select>
+    <select id="selectArticleCommentReliesByArticleCommentId" resultMap="articleCommentRelyResultMap" parameterType="int">
+        select * from article_comment_rely where article_comment_id = #{id}
+    </select>
+    <select id="selectArticleCommentReliesByParentArticleCommentRelyId" resultMap="articleCommentRelyResultMap" parameterType="int">
+        select * from article_comment_rely where parent_article_comment_rely_id = #{parent_article_comment_rely_id}
+    </select>
+    <resultMap id="articleCommentRelyResultMap" type="ArticleCommentRely">
+        <id property="id" column="article_comment_rely_id"/>
+        <result property="content" column="article_comment_rely_content"/>
+        <result property="createdTime" column="article_comment_rely_created_time"/>
+        <result property="updatedTime" column="article_comment_rely_updated_time"/>
+        <association property="jobHunter" column="job_hunter_id" select="org.lieying.dao.JobHunterMapper.selectJobHunterById"/>
+<!--        <association property="parentArticleCommentRely" column="parent_article_comment_rely_id"-->
+<!--        select="org.lieying.dao.ArticleCommentRelyMapper.selectArticleCommentRelyById"/>-->
+        <collection property="sonArticleCommentRelies" column="article_comment_rely_id"
+        select="org.lieying.dao.ArticleCommentRelyMapper.selectArticleCommentReliesByParentArticleCommentRelyId"/>
+        <!--   @Id
+    @ManyToOne(targetEntity = JobHunter.class)
+    @JoinColumn(name = "job_hunter_id")
+    private JobHunter jobHunter;
+    @ManyToOne(targetEntity = ArticleComment.class)
+    @JoinColumn(name="article_comment_id")
+    private ArticleComment articleComment;
+-->
+    </resultMap>
+</mapper>

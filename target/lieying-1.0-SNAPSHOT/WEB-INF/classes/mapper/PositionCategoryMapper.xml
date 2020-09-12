@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lieying.dao.PositionCategoryMapper">
+
+    <resultMap id="positionCategoyResultMap" type="PositionCategory">
+        <id property="id" column="position_category_id"/>
+        <result property="name" column="position_category_name"/>
+        <association property="fatherPositionCategory" column="father_position_category_id"
+                     select="org.lieying.dao.PositionCategoryMapper.selectPositionCategoryById"/>
+        <collection property="positions"
+                    ofType="Position"
+       column="position_category_id" select="org.lieying.dao.PositionMapper.selectPositionsByPositionCategoryId" />
+        <collection property="sonPositionCategories"
+                    ofType="Position"
+                    column="father_position_category_id"
+                    select="org.lieying.dao.PositionCategoryMapper.selectSonPositionCategoriesByFatherPositionCategoryId" />
+
+    </resultMap>
+    <select id="selectSonPositionCategoriesByFatherPositionCategoryId" resultType="PositionCategory" parameterType="int">
+   select position_category_id as id,position_category_name as name from position_category
+   where father_position_category_id = #{position_category_id}
+        </select>
+
+    <select id="selectAllPositionCategories" resultMap="positionCategoyResultMap">
+        select * from position_category
+    </select>
+    <select id="selectPositionCategoryById" resultMap="positionCategoyResultMap" parameterType="Integer">
+        select * from position_category where position_category_id=#{id} limit 1
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lieying.dao.RecruiterMapper">
+
+    <select id="selectRecruiterById" resultMap="recruiterResultMap" parameterType="int">
+        select * from recruiter where recruiter_id = #{id}
+    </select>
+    <select id="selectRecruitersByCompanyId" resultMap="recruiterResultMap" parameterType="int">
+        select * from recruiter where company_id = #{company_id}
+    </select>
+    <resultMap id="recruiterResultMap" type="Recruiter">
+        <id property="id" column="recruiter_id"/>
+        <result property="username" column="recruiter_username"/>
+        <result property="name" column="recruiter_name"/>
+        <result property="intro" column="recruiter_intro"/>
+        <result property="password" column="recruiter_password"/>
+        <result property="phone" column="recruiter_phone"/>
+    </resultMap>
+</mapper>

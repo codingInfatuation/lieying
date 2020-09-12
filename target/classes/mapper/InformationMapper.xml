@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lieying.dao.InformationMapper">
+
+
+    <select id="selectAllInformations" resultMap="informationResultMap">
+        select * from information
+    </select>
+    <resultMap id="informationResultMap" type="Information">
+        <id property="id" column="administrator_id"/>
+        <result property="title" column="information_title"/>
+        <result property="content" column="information_content"/>
+        <result property="createdTime" column="information_created_time"/>
+        <result property="type" column="information_type"/>
+        <!--        @ManyToOne(targetEntity=Administrator.class)-->
+        <!--        @JoinColumn(name="administrator_id")-->
+        <!--        private Administrator administrator;-->
+    </resultMap>
+</mapper>

@@ -3,9 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lieying.dao.PositionMapper">
 
-
     <!--按照投递简历多少查询职位-->
-    <select id="selectHotPositionsByCriteria" resultMap="positionResultMap" >
+    <select id="selectHotPositionsByCriteria" resultMap="positionDetailResultMap" >
         select *
          from resume r,position p
           where p.position_id =r.position_id and p.city_id = #{city_id} and position_category_id   in
@@ -19,16 +18,20 @@
         <include refid="positionShortInfo"/>
         from position where position_category_id = #{position_category_id}
     </select>
-    <select id="selectPositionsByCompanyId" resultType="Position" parameterType="int">
-        select
-        <include refid="positionShortInfo"/>
-        from position where company_id = #{company_id}
+    <select id="selectPositionsByCompanyId" resultMap="positionResultMap" parameterType="int">
+        select * from position where company_id = #{company_id}
+    </select>
+    <select id="selectPositionsByRecruiterId" resultMap="positionResultMap" parameterType="int">
+        select * from position where recruiter_id = #{recruiter_id}
     </select>
     <select id="selectPositionById" resultMap="positionResultMap" parameterType="int">
         select * from position where  position_id = #{id}
     </select>
+    <select id="selectDetailPositionById" resultMap="positionDetailResultMap" parameterType="int">
+        select * from position where  position_id = #{id}
+    </select>
 
-    <select id="selectPositionsByCriteria" resultMap="positionResultMap">
+    <select id="selectPositionsByCriteria" resultMap="positionDetailResultMap">
         select * from position where 1=1
         -- where position_name like '%${keyword}%'
         <if test="keyword!=null">
@@ -69,6 +72,16 @@
         <result property="experience" column="position_experience"/>
         <result property="detail" column="position_detail"/>
         <result property="publishTime" column="position_publish_time"/>
+    </resultMap>
+    <resultMap id="positionDetailResultMap" type="Position">
+        <id property="id" column="position_id"/>
+        <result property="name" column="position_name"/>
+        <result property="salary" column="position_salary"/>
+        <result property="address" column="position_address"/>
+        <result property="education" column="position_education"/>
+        <result property="experience" column="position_experience"/>
+        <result property="detail" column="position_detail"/>
+        <result property="publishTime" column="position_publish_time"/>
         <association property="company" column="company_id" select="org.lieying.dao.CompanyMapper.selectCompanyById"/>
         <association property="recruiter" column="recruiter_id"
                      select="org.lieying.dao.RecruiterMapper.selectRecruiterById"/>
@@ -81,15 +94,12 @@
                      select="org.lieying.dao.DistrictMapper.selectDistrictById"/>
         <collection property="positionCollects" column="position_id"
                     select="org.lieying.dao.PositionCollectMapper.selectPositionCollectsByPositionId"/>
-        <!--        @OneToMany(mappedBy = "position")-->
-        <!--        private Set<JobHunterReport> jobHunterPositionReports;-->
-        <!--        @OneToMany(mappedBy = "position")-->
-        <!--        private Set<PositionCollect> JobHunterPositionCollects;-->
-        <!--        @OneToMany(mappedBy = "position")-->
-        <!--        private Set<Resume> resumes;-->
-        <!--        @ManyToOne(targetEntity = District.class)-->
-        <!--        @JoinColumn(name = "district_id")-->
-        <!--        private District district;-->
+        <collection property="positionBrowses" column="position_id"
+                    select="org.lieying.dao.PositionBrowseMapper.selectPositionBrowsesByPositionId"/>
+        <collection property="resumes" column="position_id"
+                    select="org.lieying.dao.ResumeMapper.selectResumesByPositionId"/>
+        <collection property="jobHunterReports" column="position_id"
+                    select="org.lieying.dao.JobHunterReportMapper.selectJobHunterReportsByPositionId"/>
     </resultMap>
 
     <insert id="insertPosition" parameterType="Position">

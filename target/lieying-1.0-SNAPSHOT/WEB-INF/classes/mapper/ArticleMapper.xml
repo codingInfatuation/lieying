@@ -8,10 +8,24 @@
         select * from article where job_hunter_id = #{job_hunter_id}
     </select>
 
+
     <select id="selectArticleById" resultMap="articleResultMap" parameterType="int">
         select * from article where article_id = #{article_id} limit 1
     </select>
+    <select id="selectDetailArticleById" resultMap="articleDetailResultMap" parameterType="int">
+        select * from article where article_id = #{article_id} limit 1
+    </select>
+
     <resultMap id="articleResultMap" type="Article">
+        <id property="id" column="article_id"/>
+        <result property="title" column="article_title"/>
+        <result property="content" column="article_content"/>
+        <result property="createdTime" column="article_created_time"/>
+        <result property="updatedTime" column="article_updated_time"/>
+        <result property="state" column="article_state"/>
+    </resultMap>
+
+    <resultMap id="articleDetailResultMap" type="Article">
         <id property="id" column="article_id"/>
         <result property="title" column="article_title"/>
         <result property="content" column="article_content"/>

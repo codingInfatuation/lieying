@@ -3,7 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lieying.dao.AdministratorMapper">
 
-    <select id="selectAdministratorByUsernameAndPassword" resultMap="administratorResultMap" >
+    <select id="selectAdministratorById" resultMap="administratorResultMap" >
+
+        select * from administrator where administrator_id=#{administrator_id}  limit 1
+    </select>
+
+    <select id="selectDetailAdministratorById" resultMap="administratorDetailResultMap" >
+
+        select * from administrator where administrator_id=#{administrator_id}  limit 1
+    </select>
+
+    <select id="selectAdministratorByUsernameAndPassword" resultMap="administratorDetailResultMap" >
 
         select * from administrator where administrator_username = #{username} and administrator_password = #{password} limit 1
     </select>
@@ -11,10 +21,15 @@
         <id property="id" column="administrator_id"/>
         <result property="username" column="administrator_username"/>
         <result property="password" column="administrator_password"/>
+    </resultMap>
 
-<!--        @OneToMany(mappedBy="administrator",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)-->
-<!--        private Set<Information> informations;-->
-<!--        @OneToMany(mappedBy="administrator",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)-->
-<!--        private Set<Resource> resources;-->
+    <resultMap id="administratorDetailResultMap" type="Administrator">
+        <id property="id" column="administrator_id"/>
+        <result property="username" column="administrator_username"/>
+        <result property="password" column="administrator_password"/>
+        <collection property="resources" column="administrator_id"
+                    select="org.lieying.dao.ResourceMapper.selectResourcesByAdministratorId"/>
+        <collection property="informations" column="administrator_id"
+                    select="org.lieying.dao.InformationMapper.selectInformationsByAdministratorId"/>
     </resultMap>
 </mapper>

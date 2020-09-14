@@ -6,14 +6,23 @@
         select * from position_collect where position_id =#{position_id}
     </select>
 
+    <select id="selectPositionCollectsByJobHunterId" parameterType="int" resultMap="jobHunterCollectResultMap">
+        select * from position_collect where job_hunter_id =#{job_hunter_id}
+    </select>
+
     <resultMap id="positionCollectResultMap" type="PositionCollect">
         <id property="id" column="position_collect_id"/>
         <result property="createDate" column="position_collect_created_time"/>
         <association property="jobHunter" column="job_hunter_id"
         select="org.lieying.dao.JobHunterMapper.selectJobHunterById"/>
-<!--        @ManyToOne(targetEntity=Position.class)-->
-<!--        @JoinColumn(name="position_id")-->
-<!--        private Position position;-->
 
+
+    </resultMap>
+
+    <resultMap id="jobHunterCollectResultMap" type="PositionCollect">
+        <id property="id" column="position_collect_id"/>
+        <result property="createDate" column="position_collect_created_time"/>
+        <association property="position" column="position_id"
+                     select="org.lieying.dao.PositionMapper.selectPositionById"/>
     </resultMap>
 </mapper>

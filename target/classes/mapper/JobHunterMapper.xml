@@ -2,19 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lieying.dao.JobHunterMapper">
-    <select id="selectAllJobHunter" resultType="JobHunter">
+    <select id="selectAllJobHunter" resultMap="jobHunterDetailResultMap">
         select * from job_hunter
     </select>
 
-    <select id="selectJobHunterById" resultMap="jobHunterResultMap" parameterType="int">
-        select * from job_hunter where job_hunter_id = #{job_hunter_id}
+    <select id="selectJobHunterByUsernameAndPassword" resultMap="jobHunterDetailResultMap">
+        select * from job_hunter where job_hunter_username = #{job_hunter_username} and job_hunter_password = #{job_hunter_password} limit 1
     </select>
-<!--    <select id="selectDetailJobHunterById" resultMap="jobHunterDetailResultMap" parameterType="int">-->
-<!--        select * from job_hunter where job_hunter_id = #{job_hunter_id}-->
-<!--    </select>-->
-    <resultMap id="jobHunterResultMap" type="JobHunter">
-        <id property="id"  column="job_hunter_id"/>
-        <result property="id" column="job_hunter_id"/>
+    <select id="selectJobHunterById" resultMap="jobHunterResultMap" parameterType="int">
+        select * from job_hunter where job_hunter_id = #{job_hunter_id} limit 1
+    </select>
+    <!--    <select id="selectDetailJobHunterById" resultMap="jobHunterDetailResultMap" parameterType="int">-->
+    <!--        select * from job_hunter where job_hunter_id = #{job_hunter_id}-->
+    <!--    </select>-->
+    <select id="selectDetailJobHunterById" resultMap="jobHunterDetailResultMap" parameterType="int">
+        select * from job_hunter where job_hunter_id = #{job_hunter_id} limit 1
+    </select>
+    <resultMap id="jobHunterDetailResultMap" type="JobHunter">
+        <id property="id" column="job_hunter_id"/>
         <result property="username" column="job_hunter_username"/>
         <result property="password" column="job_hunter_password"/>
         <result property="email" column="job_hunter_email"/>
@@ -26,28 +31,34 @@
         <result property="education" column="job_hunter_education"/>
         <result property="interest" column="job_hunter_interest"/>
         <result property="address" column="job_hunter_address"/>
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<JobHunterReport> jobHunterReports;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<PositionCollect> JobHunterPositionCollects;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<ArticleComment> articleComments;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<ArticleCollect> articleCollects;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<ArticlePraise> articlePraises;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<JobHunterOrder> jobHunterOrders;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<Chat> chats;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<Resume> resumes;-->
+        <collection property="positionCollects" column="job_hunter_id"
+                    select="org.lieying.dao.PositionCollectMapper.selectPositionCollectsByJobHunterId"/>
+        <collection property="positionBrowses" column="job_hunter_id"
+                    select="org.lieying.dao.PositionBrowseMapper.selectPositionBrowsesByJobHunterId"/>
+        <collection property="jobHunterBrowses" column="job_hunter_id"
+                    select="org.lieying.dao.JobHunterBrowseMapper.selectJobHunterBrowsesByJobHunterId"/>
+        <collection property="interviews" column="job_hunter_id"
+                    select="org.lieying.dao.InterviewMapper.selectInterviewsByJobHunterId"/>
+        <collection property="articles" column="job_hunter_id"
+                    select="org.lieying.dao.ArticleMapper.selectArticlesByJobHunterId"/>
+        <collection property="resumes" column="job_hunter_id"
+                    select="org.lieying.dao.ResumeMapper.selectResumesByJobHunterId"/>
+        <collection property="articleComments" column="job_hunter_id"
+                    select="org.lieying.dao.ArticleCommentMapper.selectArticleCommentsByJobHunterId"/>
+        <collection property="articleCollects" column="job_hunter_id"
+                    select="org.lieying.dao.ArticleCollectMapper.selectArticleCollectsByJobHunterId"/>
+        <collection property="articlePraises" column="job_hunter_id"
+                    select="org.lieying.dao.ArticlePraiseMapper.selectArticlePraisesByJobHunterId"/>
+        <collection property="jobHunterReports" column="job_hunter_id"
+                    select="org.lieying.dao.JobHunterReportMapper.selectJobHunterReportsByJobHunterId"/>
+        <collection property="chats" column="job_hunter_id" select="org.lieying.dao.ChatMapper.selectChatsByJobHunterId"/>
+        <collection property="jobHunterOrders" column="job_hunter_id" select="org.lieying.dao.JobHunterOrderMapper.selectJobHunterOrdersByJobHunterId"/>
+        <!--        @OneToMany(mappedBy = "jobHunter")-->
+        <!--        private Set<ArticleCommentRely> articleCommentRelies;-->
     </resultMap>
 
-
-    <resultMap id="jobHunterDetailResultMap" type="JobHunter">
-        <id property="id"  column="job_hunter_id"/>
-        <result property="id" column="job_hunter_id"/>
+    <resultMap id="jobHunterResultMap" type="JobHunter">
+        <id property="id" column="job_hunter_id"/>
         <result property="username" column="job_hunter_username"/>
         <result property="password" column="job_hunter_password"/>
         <result property="email" column="job_hunter_email"/>
@@ -59,30 +70,6 @@
         <result property="education" column="job_hunter_education"/>
         <result property="interest" column="job_hunter_interest"/>
         <result property="address" column="job_hunter_address"/>
-
-<!--        <collection property="articles"/>-->
-<!--        <collection property="articleCollects" column="job_hunter_id"-->
-<!--        />-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<JobHunterReport> jobHunterReports;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<PositionCollect> JobHunterPositionCollects;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<ArticleComment> articleComments;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<ArticleCollect> articleCollects;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<ArticlePraise> articlePraises;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<JobHunterOrder> jobHunterOrders;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<Chat> chats;-->
-<!--        @OneToMany(mappedBy="jobHunter")-->
-<!--        private Set<Resume> resumes;-->
-<!--        @OneToMany(mappedBy = "jobHunter")-->
-<!--        private Set<Article> articles;-->
-<!--        @OneToMany(mappedBy = "jobHunter")-->
-<!--        private Set<ArticleCommentRely> articleCommentRelies;-->
     </resultMap>
 
 

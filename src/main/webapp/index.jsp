@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form method="post"  action="/lieying/user/login">
+<form method="post"  action="/lieying/recruiter/login">
     <input type="text" name="username"/>
     <input type="password" name="password">
     <input type="submit">

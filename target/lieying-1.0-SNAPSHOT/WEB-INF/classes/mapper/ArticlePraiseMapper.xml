@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lieying.dao.ArticlePraiseMapper">
-    <select id="selectArticlePraiseById" resultMap="articlePraiseResultMap" parameterType="int" >
+    <select id="selectArticlePraiseById" resultMap="JobHunterPraiseArticleResultMap" parameterType="int" >
         select * from article_praise where article_praise_id = #{article_praise_id} limit 1
     </select>
     <select id="selectArticlePraisesByArticleId" resultMap="articlePraiseResultMap" parameterType="int">
+        select * from article_praise where article_id = #{id}
+    </select>
+    <select id="selectArticlePraisesByJobHunterId" resultMap="jobHunterPraiseResultMap" parameterType="int">
         select * from article_praise where article_id = #{id}
     </select>
     <!--    <select id="selectArticleCommentsByJobHunterId" resultType="ArticleComment" parameterType="int">-->
@@ -15,5 +18,18 @@
         <id property="id" column="article_praise_id"/>
         <result property="createdTime" column="article_praise_created_time"/>
         <association property="jobHunter" column="job_hunter_id" select="org.lieying.dao.JobHunterMapper.selectJobHunterById"/>
+    </resultMap>
+
+    <resultMap id="jobHunterPraiseResultMap" type="ArticlePraise">
+        <id property="id" column="article_praise_id"/>
+        <result property="createdTime" column="article_praise_created_time"/>
+        <association property="article" column="article_id" select="org.lieying.dao.ArticleMapper.selectArticleById"/>
+    </resultMap>
+
+    <resultMap id="JobHunterPraiseArticleResultMap" type="ArticlePraise">
+        <id property="id" column="article_praise_id"/>
+        <result property="createdTime" column="article_praise_created_time"/>
+        <association property="jobHunter" column="job_hunter_id" select="org.lieying.dao.JobHunterMapper.selectJobHunterById"/>
+        <association property="article" column="article_id" select="org.lieying.dao.ArticleMapper.selectArticleById"/>
     </resultMap>
 </mapper>

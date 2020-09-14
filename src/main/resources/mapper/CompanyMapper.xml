@@ -14,6 +14,13 @@
         <if test="financing_stage_id!=null"> and financing_stage_id = #{financing_stage_id}</if>
         <if test="company_scale_id!=null"> and company_scale_id = #{company_scale_id}</if>
     </select>
+    <select id="selectHotCompaniesByCriteria" resultMap="companyResultMap">
+        select  *  from position,company
+        where company.company_id = position.company_id
+        <if test="city_id!=null"> and company.city_id = #{city_id} </if>
+        group by  position.company_id order by count(company.company_id) desc
+
+    </select>
     <resultMap id="companyResultMap" type="Company">
         <id property="id" column="company_id"/>
         <result property="name" column="company_name"/>

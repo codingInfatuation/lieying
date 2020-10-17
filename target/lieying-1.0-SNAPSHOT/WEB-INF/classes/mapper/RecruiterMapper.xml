@@ -22,6 +22,7 @@
         <result property="intro" column="recruiter_intro"/>
         <result property="password" column="recruiter_password"/>
         <result property="phone" column="recruiter_phone"/>
+        <result property="photo" column="recruiter_photo"/>
     </resultMap>
     <resultMap id="recruiterDetailResultMap" type="Recruiter">
         <id property="id" column="recruiter_id"/>
@@ -30,6 +31,7 @@
         <result property="intro" column="recruiter_intro"/>
         <result property="password" column="recruiter_password"/>
         <result property="phone" column="recruiter_phone"/>
+        <result property="photo" column="recruiter_photo"/>
         <association property="company" column="company_id" select="org.lieying.dao.CompanyMapper.selectCompanyById"/>
         <collection property="positions" column="recruiter_id" select="org.lieying.dao.PositionMapper.selectPositionsByRecruiterId"/>
         <collection property="jobHunterBrowses" column="recruiter_id" select="org.lieying.dao.JobHunterBrowseMapper.selectJobHunterBrowsesByRecruiterId"/>

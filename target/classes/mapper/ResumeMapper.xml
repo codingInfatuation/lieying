@@ -13,6 +13,10 @@
     <select id="selectResumesByPositionId" resultMap="positionResumeResultMap" parameterType="int">
         select * from resume where position_id = #{position_id}
     </select>
+
+    <update id="updateResumeStateByJobHunterIdAndPositionId" >
+        update resume set resume_state=#{resume_state} where job_hunter_id = #{job_hunter_id} and position_id = #{position_id}
+    </update>
     <resultMap id="jobHunterResumeResultMap" type="Resume">
         <id property="id" column="resume_id"/>
         <result property="name" column="resume_name"/>
@@ -38,6 +42,12 @@
                     select="org.lieying.dao.CredentialMapper.selectCredentialsByResumeId"/>
         <collection property="educationExperiences" column="resume_id"
                     select="org.lieying.dao.EducationExperienceMapper.selectEducationExperiencesByResumeId"/>
+        <collection property="volunteerExperiences" column="resume_id"
+                    select="org.lieying.dao.VolunteerExperienceMapper.selectVolunteerExperiencesByResumeId"/>
+        <collection property="internshipExperiences" column="resume_id"
+                    select="org.lieying.dao.InternshipExperienceMapper.selectInternshipExperiencesByResumeId"/>
+        <collection property="projectExperiences" column="resume_id"
+                    select="org.lieying.dao.ProjectExperienceMapper.selectProjectExperiencesByResumeId"/>
     </resultMap>
 
     <resultMap id="positionResumeResultMap" type="Resume">
@@ -65,6 +75,12 @@
                     select="org.lieying.dao.CredentialMapper.selectCredentialsByResumeId"/>
         <collection property="educationExperiences" column="resume_id"
                     select="org.lieying.dao.EducationExperienceMapper.selectEducationExperiencesByResumeId"/>
+        <collection property="volunteerExperiences" column="resume_id"
+                    select="org.lieying.dao.VolunteerExperienceMapper.selectVolunteerExperiencesByResumeId"/>
+        <collection property="internshipExperiences" column="resume_id"
+                    select="org.lieying.dao.InternshipExperienceMapper.selectInternshipExperiencesByResumeId"/>
+        <collection property="projectExperiences" column="resume_id"
+                    select="org.lieying.dao.ProjectExperienceMapper.selectProjectExperiencesByResumeId"/>
     </resultMap>
     <resultMap id="resumeResultMap" type="Resume">
         <id property="id" column="resume_id"/>
@@ -92,11 +108,12 @@
                     select="org.lieying.dao.CredentialMapper.selectCredentialsByResumeId"/>
         <collection property="educationExperiences" column="resume_id"
                     select="org.lieying.dao.EducationExperienceMapper.selectEducationExperiencesByResumeId"/>
-        <!--        @ManyToOne(targetEntity=JobHunter.class)-->
-        <!--        @JoinColumn(name="job_hunter_id")-->
-        <!--        private JobHunter jobHunter;-->
-        <!--        @ManyToOne(targetEntity=Position.class)-->
-        <!--        @JoinColumn(name="position_id")-->
-        <!--        private Position position;-->
+        <collection property="volunteerExperiences" column="resume_id"
+                    select="org.lieying.dao.VolunteerExperienceMapper.selectVolunteerExperiencesByResumeId"/>
+        <collection property="internshipExperiences" column="resume_id"
+                    select="org.lieying.dao.InternshipExperienceMapper.selectInternshipExperiencesByResumeId"/>
+        <collection property="projectExperiences" column="resume_id"
+                    select="org.lieying.dao.ProjectExperienceMapper.selectProjectExperiencesByResumeId"/>
+
     </resultMap>
 </mapper>

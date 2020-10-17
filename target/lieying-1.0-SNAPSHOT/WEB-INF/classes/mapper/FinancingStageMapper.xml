@@ -5,6 +5,10 @@
     <select id="selectFinancingStageById" resultMap="financingStageResultMap" parameterType="int">
         select * from financing_stage where financing_stage_id =#{financing_stage_id}
     </select>
+
+    <select id="selectAllFinancingStages" resultMap="financingStageResultMap" >
+        select * from financing_stage
+    </select>
     <resultMap id="financingStageResultMap" type="FinancingStage">
         <id property="id" column="financing_stage_id"/>
         <result property="name" column="financing_stage_name"/>

@@ -4,12 +4,14 @@ import org.lieying.bean.Article;
 import org.lieying.service.ArticleCommentService;
 import org.lieying.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
@@ -35,7 +37,7 @@ public class ArticleController {
     *
     */
     @RequestMapping("/list/{jobHunterId}")
-    public List<Article> jobHunterArticleList(@PathVariable int jobHunterId){
+    public List<Article> getArticlesByJobHunterId(@PathVariable int jobHunterId){
         return articleService.queryArticlesByJobHunterId(jobHunterId);
     }
 

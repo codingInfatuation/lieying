@@ -39,7 +39,10 @@ public class Recruiter implements Serializable {
 	private String position;
 	@Column(name="recruiter_phone",length=11,nullable=false,unique=true)
 	private String phone;
-	
+
+	@Column(name="recruiter_photo",length=1024)
+	private String photo;
+
 	@ManyToOne(targetEntity=Company.class)
 	@JoinColumn(name="company_id")
 	private Company company;

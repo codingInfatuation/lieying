@@ -1,32 +1,34 @@
 package org.lieying.web.controller;
 
-import org.lieying.bean.Company;
-import org.lieying.bean.Position;
+import org.lieying.bean.*;
+import org.lieying.service.CompanyScaleService;
 import org.lieying.service.CompanyService;
+import org.lieying.service.FinancingStageService;
+import org.lieying.service.IndustryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
-
+    @Autowired
+    private FinancingStageService financingStageService;
+    @Autowired
+    private CompanyScaleService companyScaleService;
+    @Autowired
+    private IndustryService industryService;
     /*
      * 公司详情
      * @param  id  公司id
      */
     @RequestMapping("/{id}")
-    public Company companyDetail(@PathVariable("id") int id) {
-
-        Company company = companyService.queryCompanyById(id);
-        return company;
+    public Company getCompanyById(@PathVariable("id") int id) {
+        return companyService.queryCompanyById(id);
     }
     /*
      * 多条件查询公司信息
@@ -36,7 +38,7 @@ public class CompanyController {
      * @param   companyScaleId     公司规模id
      * */
     @RequestMapping("")
-    public List<Company> findCompanyByCriteria(@RequestParam(value = "cityId", required = false) Integer cityId,
+    public List<Company> getCompanyByCriteria(@RequestParam(value = "cityId", required = false) Integer cityId,
                                                @RequestParam(value = "industryId", required = false) Integer industryId,
                                                @RequestParam(value = "financingStageId", required = false) Integer financingStageId,
                                                @RequestParam(value = "companyScaleId", required = false) Integer companyScaleId) {

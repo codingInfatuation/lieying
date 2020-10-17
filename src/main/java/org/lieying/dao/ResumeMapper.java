@@ -1,5 +1,6 @@
 package org.lieying.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.lieying.bean.Resume;
 
 import java.util.List;

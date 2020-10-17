@@ -70,4 +70,13 @@ public class Resume {
 	private Set<EducationExperience> educationExperiences;
 	@OneToMany(mappedBy="resume")
 	private Set<Credential> credentials;
+
+	@OneToMany(mappedBy="resume")
+	private Set<ProjectExperience> projectExperiences;
+
+	@OneToMany(mappedBy="resume")
+	private Set<VolunteerExperience> volunteerExperiences;
+
+	@OneToMany(mappedBy="resume")
+	private Set<InternshipExperience> internshipExperiences;
 }

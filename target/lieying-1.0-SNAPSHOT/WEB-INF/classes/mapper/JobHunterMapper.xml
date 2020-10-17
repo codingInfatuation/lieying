@@ -72,5 +72,4 @@
         <result property="address" column="job_hunter_address"/>
     </resultMap>
 
-
 </mapper>

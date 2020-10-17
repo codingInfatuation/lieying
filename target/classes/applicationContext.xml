@@ -20,24 +20,25 @@
 
     <!--<context:property-placeholder location="classpath*:jdbc.properties" ignore-resource-not-found="false" ignore-unresolvable="true" order="1"/>-->
 
-<!--  <util:properties id="dataSourceProps" location="classpath:jdbc.properties"/>-->
-<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-<!--        <property name="driverClassName" value="${jdbc.driver}"></property>-->
-<!--        <property name="url" value="${jdbc.url}"></property>-->
-<!--        <property name="username" value="${jdbc.username}"></property>-->
-<!--        <property name="password" value="${jdbc.password}"></property>-->
-<!--    </bean>-->
-  <!--配置dataSource-->
-      <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-         <property name="url" value="jdbc:mysql://localhost:3306/lieying?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf-8"></property>
-          <property name="username" value="root"></property>
-          <property name="password" value="200934652qwe"></property>
-
-        </bean>
+    <!--  <util:properties id="dataSourceProps" location="classpath:jdbc.properties"/>-->
+    <!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--        <property name="driverClassName" value="${jdbc.driver}"></property>-->
+    <!--        <property name="url" value="${jdbc.url}"></property>-->
+    <!--        <property name="username" value="${jdbc.username}"></property>-->
+    <!--        <property name="password" value="${jdbc.password}"></property>-->
+    <!--    </bean>-->
+    <!--配置dataSource-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/lieying?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="200934652qwe"/>
+    </bean>
     <!-- 配置sessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="configLocation" value="classpath:mybatis-config.xml"/><!--org.mybatis.spring.SqlSessionFactoryBean-->
+        <property name="configLocation"
+                  value="classpath:mybatis-config.xml"/><!--org.mybatis.spring.SqlSessionFactoryBean-->
         <property name="dataSource" ref="dataSource"/>
         <!--如果dao接口和.xml文件不在同一目录-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>

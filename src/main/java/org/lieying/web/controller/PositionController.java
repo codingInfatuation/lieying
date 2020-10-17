@@ -3,17 +3,16 @@ package org.lieying.web.controller;
 import com.github.pagehelper.PageInfo;
 import javafx.geometry.Pos;
 import org.lieying.bean.Position;
+import org.lieying.bean.PositionCategory;
 import org.lieying.bean.Recruiter;
+import org.lieying.service.PositionCategoryService;
 import org.lieying.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-
+@CrossOrigin
 @RestController()
 @RequestMapping(value = "/position")
 public class PositionController {
@@ -26,7 +25,7 @@ public class PositionController {
      * @param  positionId   职位id
      */
     @RequestMapping("/{positionId}")
-    public Position positionDetail(@PathVariable int positionId) {
+    public Position getPositionById(@PathVariable int positionId) {
         long before = System.currentTimeMillis();
         Position position = positionService.queryPositionById(positionId);
         long after = System.currentTimeMillis();
@@ -38,8 +37,8 @@ public class PositionController {
      *  多条件搜索职位 每个条件非必选
      *  @param   keyword              职位关键字
      *  @param   cityId               城市id
-     *  @param   positionCategoryId  城市分类id
-     *  @param   industryId           公司行业id
+     *  @param   positionCategoryId   职位分类id
+     *  @param   industryId           行业id
      *  @param   positionEducation    学历
      *  @param   positionSalary       薪资
      *  @param   positionExperience   经验
@@ -47,7 +46,7 @@ public class PositionController {
      *  @param   positionPublishTime  职位发布时间
      */
     @RequestMapping("")
-    public PageInfo<Position> findByKeyword(@RequestParam(value = "keyword", required = false) String keyword,
+    public PageInfo<Position> getPositionByKeyword(@RequestParam(value = "keyword", required = false) String keyword,
                                             @RequestParam(value = "cityId", required = false) Integer cityId,
                                             @RequestParam(value = "positionCategoryId", required = false) Integer positionCategoryId,
                                             @RequestParam(value = "industryId", required = false) Integer industryId,

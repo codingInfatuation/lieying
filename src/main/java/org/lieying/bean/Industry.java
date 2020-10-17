@@ -25,4 +25,5 @@ public class Industry {
 
     @OneToMany(mappedBy = "industry")
     private Set<Company> companies;
+
 }

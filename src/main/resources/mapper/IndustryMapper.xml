@@ -5,6 +5,9 @@
     <select id="selectIndustryById" resultMap="industryResultMap" parameterType="int">
         select * from industry where industry_id = #{id}
     </select>
+    <select id="selectAllIndustries" resultMap="industryResultMap">
+        select * from industry
+    </select>
     <resultMap id="industryResultMap" type="Industry">
         <id property="id" column="industry_id"/>
         <result property="name" column="industry_name"/>
@@ -12,4 +15,5 @@
 <!--        @OneToMany(mappedBy = "industry")-->
 <!--        private Set<Company> companies;-->
     </resultMap>
+
 </mapper>
